@@ -155,8 +155,8 @@ class UserController extends Controller
 
         $data = new Question();
         $data->question = $request->question;
-        $data->A = $request->a;
-        $data->B = $request->b;
+        $data->A = $request->A;
+        $data->B = $request->B;
         $data->save();
 
         return response()->json(['response'=>$data]);
