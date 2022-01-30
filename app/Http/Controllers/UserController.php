@@ -123,11 +123,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function allVotes(){
+        $votes = vote::all();
+        return response()->json(['success' => true, 'response' => $votes]);
     }
-
     /**
      * Update the specified resource in storage.
      *
