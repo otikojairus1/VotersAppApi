@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Question;
 class QuestionController extends Controller
 {
     public function add(Request $request){
@@ -25,14 +25,14 @@ class QuestionController extends Controller
             return response()->json(['success' => false, 'error' => $validator->messages()]);
         }
 
-        $data = \App\Models\Question::create(['question'=>$request->question, 'a'=>$request->a,
+        $data = Question::create(['question'=>$request->question, 'a'=>$request->a,
             'b'=>$request->b, 'c'=>$request->c, 'd'=>$request->d]);
 
         return response()->json(['response'=>$data]);
     }
 
     public function all(){
-        $data = \App\Models\Question::all();
+        $data = Question::all();
         return response()->json(['response'=>$data]);
     }
 }
