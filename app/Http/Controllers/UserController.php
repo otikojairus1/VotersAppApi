@@ -138,15 +138,14 @@ class UserController extends Controller
 
         $rules = [
             'question' => 'required',
-            'a' => 'required',
-            'b' => 'required',
-            'c' => '',
-            'd' => '',
+            'A' => 'required',
+            'B' => 'required',
+            'C' => '',
+            'D' => '',
         ];
 
-        $input     = $request->only('question','a','b','c','d');
+        $input     = $request->only('question','A','B','C','D');
         $validator = Validator::make($input, $rules);
-
         if ($validator->fails()) {
             return response()->json(['success' => false, 'error' => $validator->messages()]);
         }
@@ -156,8 +155,8 @@ class UserController extends Controller
 
         $data = new Question();
         $data->question = $request->question;
-        $data->a = $request->a;
-        $data->b = $request->b;
+        $data->A = $request->a;
+        $data->B = $request->b;
         $data->save();
 
         return response()->json(['response'=>$data]);
