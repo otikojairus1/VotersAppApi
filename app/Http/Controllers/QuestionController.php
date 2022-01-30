@@ -25,8 +25,14 @@ class QuestionController extends Controller
             return response()->json(['success' => false, 'error' => $validator->messages()]);
         }
 
-        $data = Question::create(['question'=>$request->question, 'a'=>$request->a,
-            'b'=>$request->b, 'c'=>$request->c, 'd'=>$request->d]);
+        //$data = Question::create(['question'=>$request->question, 'a'=>$request->a,
+          //  'b'=>$request->b, 'c'=>$request->c, 'd'=>$request->d]);
+
+        $data = new Question();
+        $data->question = $request->question;
+        $data->a = $request->a;
+        $data->b = $request->b;
+        $data->save();
 
         return response()->json(['response'=>$data]);
     }
