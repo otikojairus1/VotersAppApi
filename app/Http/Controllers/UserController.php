@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use App\Models\User;
+use App\Models\vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -45,11 +46,28 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    public function Voting(Request $request){
+        $rules = [
+            'voter' => 'required',
+            'question' => 'required',
+            'answer' => 'required',
 
+        ];
+
+        $input     = $request->only('voter','question','answer');
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->messages()]);
+        }
+
+        $data = vote::create([
+            'voter'=>$request->voter,
+            'question'=>$request->question,
+            'answer'=>$request->answer,
+        ]);
+        return response()->json(['success' => true, 'response' => $data]);
+    }
     /**
      * Store a newly created resource in storage.
      *
