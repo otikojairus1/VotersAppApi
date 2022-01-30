@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', [\App\Http\Controllers\UserController::class, "register"]);
+Route::post('/register', [UserController::class, "register"]);
 
-Route::post('/login', [\App\Http\Controllers\UserController::class, "login"]);
-Route::post('/add/question', [\App\Http\Controllers\UserController::class, "add"]);
-Route::get('/all/questions', [\App\Http\Controllers\QuestionController::class, "all"]);
-Route::post('/vote', [\App\Http\Controllers\VoteController::class, "vote"]);
-Route::get('/all/votes', [\App\Http\Controllers\VoteController::class, "allVotes"]);
+Route::post('/login', [UserController::class, "login"]);
+Route::post('/add/question', [UserController::class, "add"]);
+Route::get('/all/questions', [QuestionController::class, "all"]);
+Route::post('/vote', [VoteController::class, "vote"]);
+Route::get('/all/votes', [VoteController::class, "allVotes"]);

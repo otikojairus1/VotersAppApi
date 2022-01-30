@@ -16,7 +16,7 @@ class voteController extends Controller
 
         ];
 
-        $input     = $request->only('question','voter','answer');
+        $input     = $request->only('voter','question','answer');
         $validator = Validator::make($input, $rules);
 
         if ($validator->fails()) {
