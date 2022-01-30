@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -70,21 +71,21 @@ class UserController extends Controller
         }
 
 
-        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
-            $user = Auth::user(); 
-            // $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+            $user = Auth::user();
+            // $success['token'] =  $user->createToken('MyApp')-> accessToken;
             $token = $user->createToken('accessToken', ['admin']);
- 
+
                  if($user->email == "admin@msaadaapp.com"){
-                     return response()->json(['success' => true, 'userType'=>'admin' ,'userdetails'=>$user,'token'=>$token],200); 
+                     return response()->json(['success' => true, 'userType'=>'admin' ,'userdetails'=>$user,'token'=>$token],200);
                  }else{
-                     return response()->json(['success' => true, 'userType'=>'other', 'userdetails'=>$user,'token'=>$token],200); 
+                     return response()->json(['success' => true, 'userType'=>'other', 'userdetails'=>$user,'token'=>$token],200);
                  }
-             
-         } 
-         else{ 
-             return response()->json(['success'=>false,'error'=>'wrong login credentials' ], 200); 
-         } 
+
+         }
+         else{
+             return response()->json(['success'=>false,'error'=>'wrong login credentials' ], 200);
+         }
     }
 
     /**
@@ -130,5 +131,35 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function add(Request $request){
+
+
+        $rules = [
+            'question' => 'required',
+            'a' => 'required',
+            'b' => 'required',
+            'c' => '',
+            'd' => '',
+        ];
+
+        $input     = $request->only('question','a','b','c','d');
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->messages()]);
+        }
+
+        //$data = Question::create(['question'=>$request->question, 'a'=>$request->a,
+        //  'b'=>$request->b, 'c'=>$request->c, 'd'=>$request->d]);
+
+        $data = new Question();
+        $data->question = $request->question;
+        $data->a = $request->a;
+        $data->b = $request->b;
+        $data->save();
+
+        return response()->json(['response'=>$data]);
     }
 }
