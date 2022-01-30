@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class voteController extends Controller
 {
-    public function vote(Request $request){
+    public function Voting(Request $request){
         $rules = [
             'voter' => 'required',
             'question' => 'required',

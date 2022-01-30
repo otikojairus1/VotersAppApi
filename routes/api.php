@@ -21,5 +21,5 @@ Route::post('/register', [UserController::class, "register"]);
 Route::post('/login', [UserController::class, "login"]);
 Route::post('/add/question', [UserController::class, "add"]);
 Route::get('/all/questions', [QuestionController::class, "all"]);
-Route::post('/vote', [VoteController::class, "vote"]);
+Route::post('/voting', [VoteController::class, "Voting"]);
 Route::get('/all/votes', [VoteController::class, "allVotes"]);
