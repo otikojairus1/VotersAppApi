@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -54,9 +55,36 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
-        //
+        $rules = [
+            'email' => 'required',
+            'password' => 'required',
+        ];
+
+        $input     = $request->only('email','password');
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'error' => $validator->messages()]);
+        }
+
+
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){ 
+            $user = Auth::user(); 
+            // $success['token'] =  $user->createToken('MyApp')-> accessToken; 
+            $token = $user->createToken('accessToken', ['admin']);
+ 
+                 if($user->email == "admin@msaadaapp.com"){
+                     return response()->json(['success' => true, 'userType'=>'admin' ,'userdetails'=>$user,'token'=>$token],200); 
+                 }else{
+                     return response()->json(['success' => true, 'userType'=>'other', 'userdetails'=>$user,'token'=>$token],200); 
+                 }
+             
+         } 
+         else{ 
+             return response()->json(['success'=>false,'error'=>'wrong login credentials' ], 200); 
+         } 
     }
 
     /**

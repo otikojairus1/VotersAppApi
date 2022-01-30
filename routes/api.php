@@ -15,3 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/register', [\App\Http\Controllers\UserController::class, "register"]);
+
+Route::post('/login', [\App\Http\Controllers\UserController::class, "login"]);
+Route::post('/add', [\App\Http\Controllers\Question::class, "add"]);
+Route::get('/all', [\App\Http\Controllers\Question::class, "all"]);
